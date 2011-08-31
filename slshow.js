@@ -16,6 +16,39 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-$.ready(function(){
-    $.ajax()
+$(document).ready(function(){
+    var path = location.pathname;
+    var indexPath = path.slice(0, path.lastIndexOf('/')) || '/';
+
+    $.ajax({ url: indexPath,
+             dataType: 'text',
+             success: function(data){
+                 var files = data.match(/href="([^"]*.jpg|jpeg|png|gif)"/g);
+                 console.log(files);
+                 files = files.map(function(p){
+                     return p.slice(p.lastIndexOf('/')+1);
+                 });
+                 console.log(files);
+                 files.forEach(function(p){
+                     if (p) {
+                         $('.slsh-list').append('<img src="'+ p +'">');
+                     }
+                 });
+
+                 $('.slsh-list img').click(function listclick(ev){
+                     var all = $('.slsh-list img').clone();
+                     var img = $(this).detach();
+
+                     img.unbind('click');
+                     img.click(function(){
+                         $('.slsh-list').append(all);
+                         $('.slsh-list img').click(listclick);
+                         $('.slsh-image').empty();
+                     });
+
+                     $('.slsh-list').empty();
+                     $('.slsh-image').append(img);
+                 });
+             }
+           });
 });
