@@ -23,12 +23,11 @@ $(document).ready(function(){
     $.ajax({ url: indexPath,
              dataType: 'text',
              success: function(data){
-                 var files = data.match(/href="([^"]*.jpg|jpeg|png|gif)"/g);
-                 console.log(files);
+                 var files = data.match(/href="[^"]*.(jpg|jpeg|png|gif)"/g);
                  files = files.map(function(p){
+                     p = p.match(/href="(.*)"/)[1];
                      return p.slice(p.lastIndexOf('/')+1);
                  });
-                 console.log(files);
                  files.forEach(function(p){
                      if (p) {
                          $('.slsh-list').append('<img src="'+ p +'">');
