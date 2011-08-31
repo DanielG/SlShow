@@ -7,7 +7,7 @@ install a serverside slideshow thingy.
 Installation
 ------------
 
-scp slshow.html you@example.org:/var/www/yoursite/images/
+scp slshow.html slshow.js you@example.org:/var/www/yoursite/images/
 
 Done.
 
